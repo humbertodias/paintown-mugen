@@ -1,0 +1,16 @@
+#!/bin/sh -e
+
+# If you are trying to compile Paintown from source but have no idea what to do
+# try running this script. It will attempt to install all the dependencies you
+# need and compile Paintown.
+
+echo This script uses 'sudo' to install packages. 'sudo' temporarily elevates
+echo your priveleges so that new packages can be installed on your system.
+echo When prompted for a password type the password you use to login.
+
+sudo apt-get install -y libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-gfx-dev libsdl2-mixer-dev libfreetype6-dev g++ libogg-dev libvorbis-dev libmpg123-dev zlib1g-dev meson ninja-build make libyaml-cpp-dev
+
+make release
+
+ls -l paintown
+echo "Here is the executable. To run it type: ./paintown"

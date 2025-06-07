@@ -1,0 +1,20 @@
+# Build:        docker build -t paintown-mingw-build -f docker/WindowsDockerfile .
+# Access shell: docker run --rm -it --entrypoint /bin/bash  paintown-mingw-build 
+FROM ubuntu:23.10
+
+RUN mkdir /build
+
+COPY src /build/src
+COPY meson.build /build
+COPY easy-compile-mingw /build
+#COPY misc/windows/mingw_x86_64.txt /build
+#COPY misc/mingw-environment.sh /build/misc/
+COPY meson.options /build
+COPY Makefile /build
+RUN sed -i 's/misc\/windows\/mingw_x86_64.txt/mingw_x86_64.txt/' /build/Makefile
+
+RUN apt update && apt install -y sudo
+
+RUN cd /build && ./easy-compile-mingw
+
+CMD [ "/bin/bash" ]
